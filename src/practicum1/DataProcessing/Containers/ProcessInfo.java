@@ -11,12 +11,12 @@ public class ProcessInfo {
     private int turnAroundTime;
     private int waitTime;
     private int arrivalTime;
-    private int serviveTime;
+    private int serviceTime;
     private int id;
 
-    public ProcessInfo(int arrivalTime, int serviveTime, int id) {
+    public ProcessInfo(int arrivalTime, int serviceTime, int id) {
         this.arrivalTime = arrivalTime;
-        this.serviveTime = serviveTime;
+        this.serviceTime = serviceTime;
         this.id = id;
     }
 
@@ -41,8 +41,8 @@ public class ProcessInfo {
         return arrivalTime;
     }
 
-    public int getServiveTime() {
-        return serviveTime;
+    public int getServiceTime() {
+        return serviceTime;
     }
 
     public int getId() {
