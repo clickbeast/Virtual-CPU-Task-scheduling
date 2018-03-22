@@ -27,7 +27,7 @@ public class RoundRobin implements  ProcessAlgorithm{
             while (elapsedTime > process.getArrivalTime()){
 
             }
-            
+
         }
     }
 
