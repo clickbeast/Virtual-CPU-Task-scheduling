@@ -39,15 +39,15 @@ public class SimulationManager {
 
 
     public void prepareToSchedule10000() {
-        processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml",100000);
+        processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
     }
 
     public void prepareToSchedule20000() {
-        processList = new XMLProcessor().generateProcessListBasedOnXML("processen20000.xml",200000);
+        processList = new XMLProcessor().generateProcessListBasedOnXML("processen20000.xml");
     }
 
     public void prepareToSchedule50000() {
-        processList = new XMLProcessor().generateProcessListBasedOnXML("processen50000.xml",500000);
+        processList = new XMLProcessor().generateProcessListBasedOnXML("processen50000.xml");
     }
 
 
@@ -60,7 +60,7 @@ public class SimulationManager {
 
 
         //define the algirithmn
-        ProcessAlgorithm roundRobin = new RoundRobin(this.processList);
+        ProcessAlgorithm roundRobin = new RoundRobin(this.processList, 2);
         ProcessAlgorithm fcfs = new FCFS(this.processList);
 
         results.add(this.runSimulation(roundRobin));

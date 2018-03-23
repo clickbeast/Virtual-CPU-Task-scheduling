@@ -5,6 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import practicum1.DataProcessing.Containers.ProcessList;
+import practicum1.DataProcessing.Processing.XMLProcessor;
+import practicum1.Simulation.ScheduleAlgorithms.ProcessAlgorithm;
+import practicum1.Simulation.ScheduleAlgorithms.RoundRobin;
 
 public class Main extends Application {
 
@@ -14,6 +18,12 @@ public class Main extends Application {
         primaryStage.setTitle("Practicum 1: Simon Vermeir & Jonas Vinck");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+
+/* testing
+        ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
+        ProcessAlgorithm roundRobin = new RoundRobin(processList, 2);
+        roundRobin.run();
+*/
     }
 
 

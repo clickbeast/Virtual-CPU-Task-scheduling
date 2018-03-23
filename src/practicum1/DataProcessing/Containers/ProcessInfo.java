@@ -12,11 +12,13 @@ public class ProcessInfo {
     private int waitTime;
     private int arrivalTime;
     private int serviceTime;
+    private int timeToServe;
     private int id;
 
     public ProcessInfo(int arrivalTime, int serviceTime, int id) {
         this.arrivalTime = arrivalTime;
         this.serviceTime = serviceTime;
+        this.timeToServe = serviceTime;
         this.id = id;
     }
 
@@ -45,7 +47,15 @@ public class ProcessInfo {
         return serviceTime;
     }
 
+    public int getTimeToServe() {
+        return timeToServe;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void serve(int q){
+        this.timeToServe -= q;
     }
 }

@@ -1,11 +1,11 @@
 package practicum1.DataProcessing.Containers;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
-public class ProcessList extends ArrayList<ProcessInfo>{
+public class ProcessList extends LinkedList<ProcessInfo> {
 
-    public ProcessList(int initialCapacity) {
-        super(initialCapacity);
+    public ProcessList() {
+        super();
     }
 
 

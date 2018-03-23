@@ -22,12 +22,31 @@ public class RoundRobin implements  ProcessAlgorithm{
     @Override
     public void run() {
 
-        for(ProcessInfo process: processList){
+        int processNumber = 0;
+        ProcessInfo next = null;
+        ProcessInfo executing;
 
-            while (elapsedTime > process.getArrivalTime()){
+        while(this.processList.size() != 0 && this.que.size() != 0){
 
+            if(next == null) next = this.processList.getFirst();
+
+            if(next.getArrivalTime() > elapsedTime && this.que.size() == 0){
+
+                elapsedTime = next.getArrivalTime() + q;
+                next.serve(q);
+                this.que.addLast(next);
+                next = this.que.getFirst();
             }
+            else{
+                if(next.getArrivalTime() < elapsedTime) {
+                    this.que.addLast(next);
+                }
 
+                executing = this.que.getFirst();
+                executing.serve(q);
+                elapsedTime+=q;
+                this.que.addLast(executing);
+            }
         }
     }
 

@@ -21,9 +21,9 @@ public class XMLProcessor {
     }
 
     //TODO fully read file and fully generate list
-    public ProcessList generateProcessListBasedOnXML(String fileName, int capacity) {
+    public ProcessList generateProcessListBasedOnXML(String fileName) {
 
-        ProcessList processList = new ProcessList(10000);
+        ProcessList processList = new ProcessList();
 
         //read the xml file
         try {
