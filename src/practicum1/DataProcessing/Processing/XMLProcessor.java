@@ -13,8 +13,6 @@ import java.io.File;
 
 /*
     Main task: Process a supplied xml document and generate an approptiate list of process Objects that can be handled later
-
-
  */
 public class XMLProcessor {
 
@@ -38,7 +36,6 @@ public class XMLProcessor {
 
             Element root = doc.getDocumentElement();
             NodeList list = root.getElementsByTagName("process");
-            System.out.println("test");
 
             for(int i = 0; i < list.getLength(); i++){
 
@@ -52,9 +49,7 @@ public class XMLProcessor {
                 ));
             }
 
-            //TODO Read document recursivly and give processList
-
-            System.out.println("XML file generated");
+            System.out.println("XML file Generated");
         } catch (Exception e) {
             e.printStackTrace();
         }

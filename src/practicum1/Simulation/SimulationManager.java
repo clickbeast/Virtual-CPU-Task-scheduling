@@ -1,5 +1,6 @@
 package practicum1.Simulation;
 
+import practicum1.MainWindowViewController;
 import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.ResultProcessor;
 import practicum1.DataProcessing.Processing.XMLProcessor;
@@ -20,14 +21,18 @@ import java.util.List;
 public class SimulationManager {
 
 
-    //info talkback
+    //access UI
+    private MainWindowViewController viewController;
+
 
     //Processes
     private ProcessList processList;
 
+
     public SimulationManager() {
         System.out.println("Creating Simulation Manager");
     }
+
 
 
     public void resetSimulationManager() {
@@ -55,6 +60,7 @@ public class SimulationManager {
     public List<SimulationResult> runAllAlgorithmSimulations () {
 
         System.out.println("Preparing to run all algorithms on loaded processes");
+        viewController.displayInfoMessage("Beginning to run Algorithms.");
 
         List<SimulationResult> results = new ArrayList<>();
 
@@ -68,6 +74,8 @@ public class SimulationManager {
 
         System.out.println("DONE running algorithms on loaded processes");
 
+        viewController.displayInfoMessage("Done running Algorrithms");
+
         return results;
     }
 
@@ -76,14 +84,19 @@ public class SimulationManager {
      *
      * @param processAlgorithm  An instance of an algirthm that is about to be used on the current scheduled processes
      *
-     * ç@return Holds all simulatuon data , like TAT, data for  creating graphs in UI, ETC.
+     * @return SuimulationResult: Holds all the simulation date , like TAT, data for  creating graphs in UI, ETC.
      */
     public SimulationResult runSimulation(ProcessAlgorithm processAlgorithm) {
         System.out.println("Running algorithm: " + processAlgorithm.getAlgorithmName());
+        viewController.displayInfoMessage("Running Algorithm: " + processAlgorithm.getAlgorithmName());
         processAlgorithm.run();
         //create the a result object based on the given run
         return ResultProcessor.generateSimulationResult(this.processList,processAlgorithm.getAlgorithmName());
+
     }
 
 
+    public void setMainWindowController(MainWindowViewController mainWindowController) {
+        this.viewController = mainWindowController;
+    }
 }
