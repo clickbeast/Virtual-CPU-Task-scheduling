@@ -30,7 +30,7 @@ public class RoundRobin implements  ProcessAlgorithm{
 
             if(processList.size() != 0) {
 
-                if(this.que.size() == 0){
+                if(this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()){
                     elapsedTime = processList.getFirst().getArrivalTime();
                     last = processList.getFirst().getId();
                 }

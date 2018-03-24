@@ -31,12 +31,12 @@ public class ShortestJobFirst implements ProcessAlgorithm{
 
             if (processList.size() != 0) {
 
-                if (this.que.size() == 0) {
+                if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
                     elapsedTime = processList.getFirst().getArrivalTime();
 //                    last = processList.getFirst().getId();
                 }
 
-                if (elapsedTime >= processList.getFirst().getArrivalTime()) {
+                while (elapsedTime >= processList.getFirst().getArrivalTime()) {
                     que.add(processList.removeFirst());
                 }
             }
