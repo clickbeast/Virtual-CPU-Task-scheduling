@@ -22,7 +22,6 @@ public class RoundRobin implements  ProcessAlgorithm{
     @Override
     public void run() {
 
-        int processNumber = 0;
         ProcessInfo next = null;
         ProcessInfo executing;
 
@@ -35,7 +34,7 @@ public class RoundRobin implements  ProcessAlgorithm{
                 elapsedTime = next.getArrivalTime() + q;
                 next.serve(q);
                 this.que.addLast(next);
-                next = this.que.getFirst();
+                next = null;
             }
             else{
                 if(next.getArrivalTime() < elapsedTime) {
