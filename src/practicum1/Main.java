@@ -19,11 +19,9 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-/* testing
         ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
         ProcessAlgorithm roundRobin = new RoundRobin(processList, 2);
         roundRobin.run();
-*/
     }
 
 

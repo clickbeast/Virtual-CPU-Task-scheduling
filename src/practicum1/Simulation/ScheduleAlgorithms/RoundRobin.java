@@ -24,15 +24,15 @@ public class RoundRobin implements  ProcessAlgorithm{
 
         ProcessInfo next = null;
         ProcessInfo executing;
+        int served;
 
-        while(this.processList.size() != 0 && this.que.size() != 0){
+        while(this.processList.size() != 0 || this.que.size() != 0){
 
-            if(next == null) next = this.processList.getFirst();
+            if(next == null) next = this.processList.removeFirst();
 
             if(next.getArrivalTime() > elapsedTime && this.que.size() == 0){
 
                 elapsedTime = next.getArrivalTime() + q;
-                next.serve(q);
                 this.que.addLast(next);
                 next = null;
             }
@@ -41,10 +41,11 @@ public class RoundRobin implements  ProcessAlgorithm{
                     this.que.addLast(next);
                 }
 
-                executing = this.que.getFirst();
+                executing = this.que.removeFirst();
+                served = (executing.getTimeToServe()%q)+1;
                 executing.serve(q);
-                elapsedTime+=q;
-                this.que.addLast(executing);
+                elapsedTime+=served;
+                if(executing.getTimeToServe() <= 0) this.que.addLast(executing);
             }
         }
     }

@@ -2,6 +2,9 @@ package practicum1.DataProcessing.Processing;
 
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,18 +36,29 @@ public class XMLProcessor {
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document doc = documentBuilder.parse(file);
 
+            Element root = doc.getDocumentElement();
+            NodeList list = root.getElementsByTagName("process");
+            System.out.println("test");
+
+            for(int i = 0; i < list.getLength(); i++){
+
+                String id = list.item(i).getChildNodes().item(1).getTextContent();
+                String arrival = list.item(i).getChildNodes().item(3).getTextContent();
+                String service = list.item(i).getChildNodes().item(5).getTextContent();
+                processList.add(new ProcessInfo(
+                        Integer.parseInt(arrival),
+                        Integer.parseInt(service),
+                        Integer.parseInt(id)
+                ));
+            }
 
             //TODO Read document recursivly and give processList
 
-
+            System.out.println("XML file generated");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("XML file generated");
-
         return processList;
     }
-
-
 }
