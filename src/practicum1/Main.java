@@ -9,6 +9,7 @@ import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.XMLProcessor;
 import practicum1.Simulation.ScheduleAlgorithms.ProcessAlgorithm;
 import practicum1.Simulation.ScheduleAlgorithms.RoundRobin;
+import practicum1.Simulation.ScheduleAlgorithms.ShortestJobFirst;
 
 public class Main extends Application {
 
@@ -19,8 +20,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-        ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("test.txt");
-        ProcessAlgorithm roundRobin = new RoundRobin(processList, 2);
+        ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
+        ProcessAlgorithm roundRobin = new RoundRobin(processList, 8);
         roundRobin.run();
     }
 

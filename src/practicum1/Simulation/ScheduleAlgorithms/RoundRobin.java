@@ -14,15 +14,17 @@ public class RoundRobin implements  ProcessAlgorithm{
     private int q;
 
     public RoundRobin(ProcessList processList, int q) {
+        this.backup = (ProcessList) processList.clone();
         this.processList = processList;
         this.elapsedTime = 0;
         this.que = new LinkedList<>();
         this.q = q;
-        this.backup = (ProcessList) processList.clone();
     }
 
     @Override
     public void run() {
+
+        int last = 0;
 
         while(this.processList.size() != 0 || this.que.size() != 0){
 
@@ -30,6 +32,7 @@ public class RoundRobin implements  ProcessAlgorithm{
 
                 if(this.que.size() == 0){
                     elapsedTime = processList.getFirst().getArrivalTime();
+                    last = processList.getFirst().getId();
                 }
 
                 if (elapsedTime >= processList.getFirst().getArrivalTime()) {
@@ -41,7 +44,7 @@ public class RoundRobin implements  ProcessAlgorithm{
             if(que.getFirst().getTimeToServe() > 0) que.addLast(que.removeFirst());
             else que.removeFirst();
         }
-/*
+
         boolean found = false;
         int time = 0;
         for(ProcessInfo processInfo: backup){
@@ -53,7 +56,7 @@ public class RoundRobin implements  ProcessAlgorithm{
         }
         System.out.println(time);
         System.out.println(elapsedTime);
-*/
+
     }
 
     @Override
