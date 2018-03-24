@@ -4,19 +4,14 @@ package practicum1.Simulation.ScheduleAlgorithms;
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
 
-//!!!!! : doet SIMON al.
 
 
-/*
-
-Example of
- */
-public class FCFS implements ProcessAlgorithm {
+public class FirstComeFirstServe implements ProcessAlgorithm {
 
     private ProcessList processList;
     private int elapsedTime;
 
-    public FCFS(ProcessList processList) {
+    public FirstComeFirstServe(ProcessList processList) {
 
         this.processList = processList;
         this.elapsedTime = 0;

@@ -4,7 +4,7 @@ import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.ResultProcessor;
 import practicum1.DataProcessing.Processing.XMLProcessor;
 import practicum1.DataProcessing.Containers.SimulationResult;
-import practicum1.Simulation.ScheduleAlgorithms.FCFS;
+import practicum1.Simulation.ScheduleAlgorithms.FirstComeFirstServe;
 import practicum1.Simulation.ScheduleAlgorithms.ProcessAlgorithm;
 import practicum1.Simulation.ScheduleAlgorithms.RoundRobin;
 
@@ -61,7 +61,7 @@ public class SimulationManager {
 
         //define the algirithmn
         ProcessAlgorithm roundRobin = new RoundRobin(this.processList, 2);
-        ProcessAlgorithm fcfs = new FCFS(this.processList);
+        ProcessAlgorithm fcfs = new FirstComeFirstServe(this.processList);
 
         results.add(this.runSimulation(roundRobin));
         results.add(this.runSimulation(fcfs));
