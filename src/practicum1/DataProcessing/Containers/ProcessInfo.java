@@ -55,7 +55,10 @@ public class ProcessInfo {
         return id;
     }
 
-    public void serve(int q){
+    public int serve(int q){
+        int timeToServe = this.timeToServe;
         this.timeToServe -= q;
+        if(timeToServe > q) return q;
+        else return timeToServe;
     }
 }
