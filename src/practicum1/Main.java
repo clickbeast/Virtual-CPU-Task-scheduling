@@ -10,6 +10,7 @@ import practicum1.DataProcessing.Processing.XMLProcessor;
 import practicum1.Simulation.ScheduleAlgorithms.ProcessAlgorithm;
 import practicum1.Simulation.ScheduleAlgorithms.RoundRobin;
 import practicum1.Simulation.ScheduleAlgorithms.ShortestJobFirst;
+import practicum1.Simulation.ScheduleAlgorithms.ShortestRemainingTime;
 import practicum1.Simulation.SimulationManager;
 
 public class Main extends Application {
@@ -71,7 +72,7 @@ public class Main extends Application {
 
         System.out.println("Testing generating processList");
         ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
-        ProcessAlgorithm roundRobin = new ShortestJobFirst(processList);
+        ProcessAlgorithm roundRobin = new ShortestRemainingTime(processList);
         roundRobin.run();
         System.out.println("checkme");
     }
