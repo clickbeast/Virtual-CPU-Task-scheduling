@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.XMLProcessor;
-import practicum1.Simulation.ScheduleAlgorithms.ProcessAlgorithm;
-import practicum1.Simulation.ScheduleAlgorithms.RoundRobin;
-import practicum1.Simulation.ScheduleAlgorithms.ShortestJobFirst;
-import practicum1.Simulation.ScheduleAlgorithms.ShortestRemainingTime;
+import practicum1.Simulation.ScheduleAlgorithms.*;
 import practicum1.Simulation.SimulationManager;
 
 public class Main extends Application {
@@ -72,7 +69,7 @@ public class Main extends Application {
 
         System.out.println("Testing generating processList");
         ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
-        ProcessAlgorithm roundRobin = new ShortestRemainingTime(processList);
+        ProcessAlgorithm roundRobin = new HighestResponseRatio(processList);
         roundRobin.run();
         System.out.println("checkme");
     }

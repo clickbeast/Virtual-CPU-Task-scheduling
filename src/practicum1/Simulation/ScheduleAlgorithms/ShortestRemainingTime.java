@@ -22,20 +22,23 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
 
     @Override
     public void run() {
-        int last = 0;
+//        int last = 0;
+        ProcessInfo exiting;
 
         while(this.processList.size() != 0) {
 
             while (elapsedTime < processList.getFirst().getArrivalTime() && this.que.size() != 0) {
                 elapsedTime += this.que.peek().serve(1);
                 if(this.que.peek().getTimeToServe() <= 0){
-                    this.que.poll();
+                    exiting = this.que.poll();
+                    exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
+                    exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
                 }
             }
 
             if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
                 elapsedTime = processList.getFirst().getArrivalTime();
-                last = processList.getFirst().getId();
+//                last = processList.getFirst().getId();
             }
 
             while (elapsedTime >= processList.getFirst().getArrivalTime()) {
@@ -46,9 +49,12 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
             }
         }
         while (this.que.size() != 0){
-            elapsedTime += this.que.poll().getTimeToServe();
+            exiting = this.que.poll();
+            elapsedTime += exiting.getTimeToServe();
+            exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
+            exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
         }
-
+/*
         boolean found = false;
         int time = 0;
         for(ProcessInfo info: backup){
@@ -60,6 +66,7 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
         }
         System.out.println(time);
         System.out.println(elapsedTime);
+*/
     }
 
     @Override

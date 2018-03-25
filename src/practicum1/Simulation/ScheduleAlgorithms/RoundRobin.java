@@ -25,6 +25,7 @@ public class RoundRobin implements  ProcessAlgorithm{
     public void run() {
 
         int last = 0;
+        ProcessInfo exiting;
 
         while(this.processList.size() != 0 || this.que.size() != 0){
 
@@ -42,7 +43,11 @@ public class RoundRobin implements  ProcessAlgorithm{
 
             elapsedTime+=que.getFirst().serve(q);
             if(que.getFirst().getTimeToServe() > 0) que.addLast(que.removeFirst());
-            else que.removeFirst();
+            else{
+                exiting = que.removeFirst();
+                exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
+                exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
+            }
         }
 
         boolean found = false;

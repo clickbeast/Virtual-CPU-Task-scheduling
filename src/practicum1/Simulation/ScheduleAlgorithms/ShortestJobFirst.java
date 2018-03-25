@@ -26,6 +26,7 @@ public class ShortestJobFirst implements ProcessAlgorithm{
     public void run() {
 
 //        int last = 0;
+        ProcessInfo exiting;
 
         while(this.processList.size() != 0 || this.que.size() != 0) {
 
@@ -40,7 +41,10 @@ public class ShortestJobFirst implements ProcessAlgorithm{
                     que.add(processList.removeFirst());
                 }
             }
-            elapsedTime += que.poll().getServiceTime();
+            exiting = que.poll();
+            elapsedTime += exiting.getServiceTime();
+            exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
+            exiting.setWaitTime(elapsedTime - exiting.getWaitTime() - exiting.getServiceTime());
         }
 /*
         boolean found = false;
