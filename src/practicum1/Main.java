@@ -69,7 +69,7 @@ public class Main extends Application {
 
         System.out.println("Testing generating processList");
         ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
-        ProcessAlgorithm roundRobin = new HighestResponseRatio(processList);
+        ProcessAlgorithm roundRobin = new MultilevelFeedbackMode(processList);
         roundRobin.run();
         System.out.println("checkme");
     }
