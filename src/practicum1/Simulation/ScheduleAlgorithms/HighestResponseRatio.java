@@ -27,15 +27,17 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
 
         while(this.processList.size() != 0 || this.que.size() != 0) {
 
-            if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
-                elapsedTime = processList.getFirst().getArrivalTime();
-                last = processList.getFirst().getId();
-            }
+            if(processList.size() != 0) {
+                if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
+                    elapsedTime = processList.getFirst().getArrivalTime();
+                    last = processList.getFirst().getId();
+                }
 
-            while (elapsedTime >= processList.getFirst().getArrivalTime()) {
-                que.add(processList.removeFirst());
-                if(processList.size() == 0){
-                    break;
+                while (elapsedTime >= processList.getFirst().getArrivalTime()) {
+                    que.add(processList.removeFirst());
+                    if (processList.size() == 0) {
+                        break;
+                    }
                 }
             }
 
@@ -44,7 +46,7 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
             exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
             exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
         }
-/*
+
         boolean found = false;
         int time = 0;
         for(ProcessInfo info: backup){
@@ -56,7 +58,7 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
         }
         System.out.println(time);
         System.out.println(elapsedTime);
-*/
+
     }
 
     @Override
