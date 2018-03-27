@@ -21,17 +21,20 @@ public class ResultProcessor {
 
         //Calculate de gemiddlede tat en turn around time
 
+        System.out.println("- - - - - -");
 
-        //Generate the graph data
+        System.out.println("Generating simulationresult");
 
-        //TODO generate graphdata, op basis van process list
 
-        GraphData bedieningstijd = new GraphData(algorithmName);
-        GraphData turnAroundTime = new GraphData(algorithmName);
 
-        SimulationResult simulationResult = new SimulationResult(algorithmName,bedieningstijd,turnAroundTime,processList.getMeanTurnAroundTime(),processList.getMeanWaitTime());
+        //DIT herhalen we 2 keer voor beide tat en wait time
+            //bundel de resultaten volgens percentielen  -> elke keer 10 bij elkaar
+            //DAN van die bundel NEEM JE GEMUIDDELDE -> dat is waarde op de YAS
+            //DIE GHEMIDDELDES IN VOLGORDE IN EEN LIJST
 
-        return simulationResult;
+        //DIE 10 nummer lijst word telkens toevoegd aan de line chart voor elke algo...  OKAY...
+
+        return null;
     }
 
 }

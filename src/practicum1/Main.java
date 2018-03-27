@@ -71,6 +71,8 @@ public class Main extends Application {
         ProcessList processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
         ProcessAlgorithm roundRobin = new MultilevelFeedbackMode(processList);
         roundRobin.run();
+
+
         System.out.println("checkme");
     }
 

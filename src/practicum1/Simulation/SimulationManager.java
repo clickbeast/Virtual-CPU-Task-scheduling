@@ -5,9 +5,7 @@ import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.ResultProcessor;
 import practicum1.DataProcessing.Processing.XMLProcessor;
 import practicum1.DataProcessing.Containers.SimulationResult;
-import practicum1.Simulation.ScheduleAlgorithms.FirstComeFirstServe;
-import practicum1.Simulation.ScheduleAlgorithms.ProcessAlgorithm;
-import practicum1.Simulation.ScheduleAlgorithms.RoundRobin;
+import practicum1.Simulation.ScheduleAlgorithms.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,14 +63,21 @@ public class SimulationManager {
         List<SimulationResult> results = new ArrayList<>();
 
 
-        //define the algirithmn
+        //define all used algos algirithmn
+        ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe(this.processList);
         ProcessAlgorithm roundRobin = new RoundRobin(this.processList, 2);
-        ProcessAlgorithm fcfs = new FirstComeFirstServe(this.processList);
+        ProcessAlgorithm highestResponseRatio = new FirstComeFirstServe(this.processList);
+        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime(this.processList);
+        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst(this.processList);
+        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
 
         results.add(this.runSimulation(roundRobin));
-        results.add(this.runSimulation(fcfs));
+        results.add(this.runSimulation(firstComeFirstServe));
+        results.add(this.runSimulation(shortestJobFirst));
+        results.add(this.runSimulation(shortestRemainingTime));
+        results.add(this.runSimulation(highestResponseRatio));
+        results.add(this.runSimulation(multilevelFeedbackMode));
 
-        System.out.println("DONE running algorithms on loaded processes");
 
         viewController.displayInfoMessage("Done running Algorrithms");
 
@@ -89,10 +94,12 @@ public class SimulationManager {
     public SimulationResult runSimulation(ProcessAlgorithm processAlgorithm) {
         System.out.println("Running algorithm: " + processAlgorithm.getAlgorithmName());
         viewController.displayInfoMessage("Running Algorithm: " + processAlgorithm.getAlgorithmName());
+
+
         processAlgorithm.run();
+
         //create the a result object based on the given run
         return ResultProcessor.generateSimulationResult(this.processList,processAlgorithm.getAlgorithmName());
-
     }
 
 
