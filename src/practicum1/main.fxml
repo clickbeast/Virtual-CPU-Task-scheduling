@@ -17,6 +17,7 @@
               <items>
                   <Button fx:id="runButton" mnemonicParsing="false" onAction="#runAction" text="Simuleer" />
                   <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
+                  <ChoiceBox fx:id="displayChoice" prefWidth="150.0" />
                   <HBox fx:id="alertInfoView" alignment="CENTER" style="-fx-background-color:  #DBEDF7; -fx-border-color: #C0E8F1; -fx-border-radius: 5;">
                      <children>
                         <Label fx:id="alertInfoLabel" prefHeight="17.0" prefWidth="250.0" text=" Info: Ready" textAlignment="CENTER" textFill="#438aa3" HBox.hgrow="ALWAYS">

@@ -14,7 +14,6 @@ public class ProcessInfo {
     private int serviceTime;
     private int timeToServe;
     private int id;
-    private int lasRan;
 
     public ProcessInfo(int arrivalTime, int serviceTime, int id) {
         this.arrivalTime = arrivalTime;
@@ -22,7 +21,6 @@ public class ProcessInfo {
         this.serviceTime = serviceTime;
         this.timeToServe = serviceTime;
         this.id = id;
-        this.lasRan = 0;
     }
 
     public ProcessInfo(ProcessInfo processInfo) {
@@ -31,7 +29,6 @@ public class ProcessInfo {
         this.serviceTime = processInfo.serviceTime;
         this.timeToServe = serviceTime;
         this.id = processInfo.id;
-        this.lasRan = 0;
     }
 
     public int getTurnAroundTime() {
@@ -64,14 +61,6 @@ public class ProcessInfo {
 
     public int getId() {
         return id;
-    }
-
-    public void setLasRan(int lasRan) {
-        this.lasRan = lasRan;
-    }
-
-    public int getLasRan() {
-        return lasRan;
     }
 
     public int serve(int q){

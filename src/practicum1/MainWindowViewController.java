@@ -1,6 +1,8 @@
 package practicum1;
 
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -8,9 +10,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -40,7 +40,11 @@ public class MainWindowViewController implements Initializable {
     public Scene scene;
     private SimulationManager simulationManager;
     public ChoiceBox choiceBox;
+    public ChoiceBox displayChoice;
+    public boolean displayTAT, displayWait, started = false;
     public Button runButton;
+
+    public List<SimulationResult> simulationResults;
 
 
     //holds all the graphs
@@ -67,7 +71,40 @@ public class MainWindowViewController implements Initializable {
         System.out.println("Initializing");
         choiceBox.setItems(FXCollections.observableArrayList("10000 Processen","50000 Processen"));
         choiceBox.getSelectionModel().selectFirst();
+        displayChoice.setItems(FXCollections.observableArrayList("TAT","Wait", "beide"));
+        displayChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                switch ((int) newValue){
+                    case 0:
+                        displayTAT = true;
+                        displayWait = false;
+                        break;
+                    case 1:
+                        displayTAT = false;
+                        displayWait = true;
+                        break;
+                    default:
+                        displayTAT = true;
+                        displayWait = true;
+                        break;
+                }
+                try{
+                    configureGraphsWithData();
+                } catch (NullPointerException e){
+                    if(started) {
+                        new Alert(
+                                Alert.AlertType.INFORMATION,
+                                "Geen data om weer te geven. Run eerst een simmulatie.",
+                                ButtonType.OK
+                        ).showAndWait();
+                    }
+                }
+            }
+        });
+        displayChoice.getSelectionModel().selectLast();
         displayInfoMessage("Preparing: Reading XML List");
+        started = true;
 
     }
 
@@ -87,13 +124,8 @@ public class MainWindowViewController implements Initializable {
      *  Layout
      */
 
-    //TODO
-    public void resetGraphView() {
 
-    }
-
-
-    public void configureGraphsWithData(List<SimulationResult> simulationResults) {
+    public void configureGraphsWithData() {
 
 
 
@@ -108,21 +140,30 @@ public class MainWindowViewController implements Initializable {
         final LogarithmicAxis yAxis2 = new LogarithmicAxis();
         yAxis2.setLabel("Normalised Turn Around Time");
 
-        ResultLineChart turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(),yAxis2,turnAroundTimeLineChartTitle);
-        ResultLineChart waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
+        ResultLineChart turnAroundTimeLineChart = null, waitTimeLineChart = null;
+        if(displayTAT) {
+            turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(), yAxis2, turnAroundTimeLineChartTitle);
+            this.graphView.getChildren().add(turnAroundTimeLineChart);
+            this.graphView.setVgrow(turnAroundTimeLineChart,Priority.ALWAYS);
+        }
+        if (displayWait) {
+            waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
+            this.graphView.getChildren().add(waitTimeLineChart);
+            //make graphs fill windows
+            this.graphView.setVgrow(waitTimeLineChart,Priority.ALWAYS);
 
-        this.graphView.getChildren().add(turnAroundTimeLineChart);
-        this.graphView.getChildren().add(waitTimeLineChart);
+        }
 
 
-        //make graphs fill windows
-        this.graphView.setVgrow(turnAroundTimeLineChart,Priority.ALWAYS);
-        this.graphView.setVgrow(waitTimeLineChart,Priority.ALWAYS);
 
         //add all chart data
         for(SimulationResult simulationResult: simulationResults) {
-            turnAroundTimeLineChart.addSeries(simulationResult.getGrafiekDataOmploopTijd(), simulationResult.getUsedAlgorithmName());
-            waitTimeLineChart.addSeries(simulationResult.getGrafiekDataBedieningsTijd(),simulationResult.getUsedAlgorithmName());
+            if(displayTAT){
+                turnAroundTimeLineChart.addSeries(simulationResult.getGrafiekDataOmploopTijd(), simulationResult.getUsedAlgorithmName());
+            }
+            if(displayWait){
+                waitTimeLineChart.addSeries(simulationResult.getGrafiekDataBedieningsTijd(),simulationResult.getUsedAlgorithmName());
+            }
         }
 
 
@@ -215,8 +256,27 @@ public class MainWindowViewController implements Initializable {
             this.simulationManager.prepareToSchedule50000();
         }
 
-        List<SimulationResult> simulationResults = this.simulationManager.runAllAlgorithmSimulations();
-        this.configureGraphsWithData(simulationResults);
+        this.simulationResults = this.simulationManager.runAllAlgorithmSimulations();
+        this.configureGraphsWithData();
+
+
+        displayInfoMessage("Simulation Finished");
+        unFreezeUI();
+    }
+
+
+    //change what the user wants to see
+    public void changeDisplay() {
+        displayInfoMessage("Starting simulation...");
+        freezeUI();
+        if(choiceBox.getSelectionModel().getSelectedItem() ==  "10000 Processen") {
+            this.simulationManager.prepareToSchedule10000();
+        }else{
+            this.simulationManager.prepareToSchedule50000();
+        }
+
+        simulationResults = this.simulationManager.runAllAlgorithmSimulations();
+        this.configureGraphsWithData();
 
 
         displayInfoMessage("Simulation Finished");
