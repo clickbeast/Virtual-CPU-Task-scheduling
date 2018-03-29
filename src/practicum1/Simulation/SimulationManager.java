@@ -71,11 +71,13 @@ public class SimulationManager {
         ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
 
         //results.add(this.runSimulation(roundRobin));
-        results.add(this.runSimulation(firstComeFirstServe));
-        results.add(this.runSimulation(shortestJobFirst));
-        results.add(this.runSimulation(shortestRemainingTime));
-        ///results.add(this.runSimulation(highestResponseRatio));
-        //results.add(this.runSimulation(multilevelFeedbackMode));
+        //results.add(this.runSimulation(firstComeFirstServe));
+        //results.add(this.runSimulation(shortestJobFirst));
+        //results.add(this.runSimulation(shortestRemainingTime));
+        //results.add(this.runSimulation(highestResponseRatio));
+
+        //OK precies
+        results.add(this.runSimulation(multilevelFeedbackMode));
 
 
         viewController.displayInfoMessage("Done Running Algorithms");

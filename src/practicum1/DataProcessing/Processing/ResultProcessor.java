@@ -30,6 +30,8 @@ public class ResultProcessor {
         int partition = processList.size()/10;
         int count = 1;
 
+        //@jonas 10 values for each percinile for the wait graph and the turn around graph
+
         //graph outputs
         GraphData waitTimeGraph = new GraphData(algorithmName);
         GraphData turnAroundTimeGraph = new GraphData(algorithmName);
