@@ -32,7 +32,6 @@ public class SimulationManager {
     }
 
 
-
     public void resetSimulationManager() {
         if(processList != null) {
             processList.clear();
@@ -66,7 +65,7 @@ public class SimulationManager {
         //define all used algos algirithmn
         ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe(this.processList);
         ProcessAlgorithm roundRobin = new RoundRobin(this.processList, 2);
-        ProcessAlgorithm highestResponseRatio = new FirstComeFirstServe(this.processList);
+        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio(this.processList);
         ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime(this.processList);
         ProcessAlgorithm shortestJobFirst = new ShortestJobFirst(this.processList);
         ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
@@ -79,7 +78,7 @@ public class SimulationManager {
         results.add(this.runSimulation(multilevelFeedbackMode));
 
 
-        viewController.displayInfoMessage("Done running Algorrithms");
+        viewController.displayInfoMessage("Done Running Algorithms");
 
         return results;
     }
@@ -94,6 +93,7 @@ public class SimulationManager {
     public SimulationResult runSimulation(ProcessAlgorithm processAlgorithm) {
         System.out.println("Running algorithm: " + processAlgorithm.getAlgorithmName());
         viewController.displayInfoMessage("Running Algorithm: " + processAlgorithm.getAlgorithmName());
+
 
         processAlgorithm.run();
 

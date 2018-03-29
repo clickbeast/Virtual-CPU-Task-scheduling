@@ -26,13 +26,19 @@ public class ResultLineChart extends LineChart <String, Number> {
 
     public void addSeries(GraphData grafiekDataBedieningsTijd, String usedAlgorithmName) {
 
+
+
         XYChart.Series series = new XYChart.Series<>();
         series.setName(usedAlgorithmName);
+
+
         int percentileCount  = 10;
         for(Integer number: grafiekDataBedieningsTijd) {
             series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number.intValue()));
             percentileCount+=10;
         }
+
+        this.getData().add(series);
     }
 
 }

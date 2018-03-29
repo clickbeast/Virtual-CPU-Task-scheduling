@@ -18,6 +18,7 @@ public class ProcessInfo {
 
     public ProcessInfo(int arrivalTime, int serviceTime, int id) {
         this.arrivalTime = arrivalTime;
+        //bedieningstijd
         this.serviceTime = serviceTime;
         this.timeToServe = serviceTime;
         this.id = id;

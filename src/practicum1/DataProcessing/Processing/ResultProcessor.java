@@ -26,7 +26,7 @@ public class ResultProcessor {
         GraphData turnAroundTimeValues = new GraphData(algorithmName);
         GraphData waitTimeValues = new GraphData(algorithmName);
 
-
+        //SORTEEEER OP BASIS VAN bedeningstijd AUB
 
         //create list of NTATS and Wait times
         List<Integer> normalisedTurnAroundTimes = new ArrayList<>();
@@ -71,7 +71,6 @@ public class ResultProcessor {
         }
 
         result.add(meanValue);
-
 
         return result;
     }
