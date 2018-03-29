@@ -5,8 +5,6 @@ import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.ResultProcessor;
 import practicum1.DataProcessing.Processing.XMLProcessor;
 import practicum1.DataProcessing.Containers.SimulationResult;
-import practicum1.Simulation.Comparators.ShortestJobFirst;
-import practicum1.Simulation.Comparators.ShortestRemainingTime;
 import practicum1.Simulation.ScheduleAlgorithms.*;
 
 import java.util.ArrayList;
@@ -72,12 +70,12 @@ public class SimulationManager {
         ProcessAlgorithm shortestJobFirst = new ShortestJobFirst(this.processList);
         ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
 
-        results.add(this.runSimulation(roundRobin));
+        //results.add(this.runSimulation(roundRobin));
         results.add(this.runSimulation(firstComeFirstServe));
         results.add(this.runSimulation(shortestJobFirst));
         results.add(this.runSimulation(shortestRemainingTime));
-        results.add(this.runSimulation(highestResponseRatio));
-        results.add(this.runSimulation(multilevelFeedbackMode));
+        ///results.add(this.runSimulation(highestResponseRatio));
+        //results.add(this.runSimulation(multilevelFeedbackMode));
 
 
         viewController.displayInfoMessage("Done Running Algorithms");
@@ -96,11 +94,10 @@ public class SimulationManager {
         System.out.println("Running algorithm: " + processAlgorithm.getAlgorithmName());
         viewController.displayInfoMessage("Running Algorithm: " + processAlgorithm.getAlgorithmName());
 
-
-        processAlgorithm.run();
+        ProcessList processListOutcome = processAlgorithm.run();
 
         //create the a result object based on the given run
-        return ResultProcessor.generateSimulationResult(this.processList,processAlgorithm.getAlgorithmName());
+        return ResultProcessor.generateSimulationResult(processListOutcome,processAlgorithm.getAlgorithmName());
     }
 
 

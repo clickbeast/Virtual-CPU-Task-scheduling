@@ -13,6 +13,7 @@ import practicum1.DataProcessing.Containers.SimulationResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ResultProcessor {
@@ -23,57 +24,44 @@ public class ResultProcessor {
         //Calculate de gemiddlede tat en turn around time
         System.out.println("Generating simulationresult");
 
-        GraphData turnAroundTimeValues = new GraphData(algorithmName);
-        GraphData waitTimeValues = new GraphData(algorithmName);
+        //sort processlist on service time
+        Collections.sort(processList , Comparator.comparingInt(ProcessInfo::getServiceTime));
 
-        //SORTEEEER OP BASIS VAN bedeningstijd AUB
-
-        //create list of NTATS and Wait times
-        List<Integer> normalisedTurnAroundTimes = new ArrayList<>();
-        for(ProcessInfo processInfo: processList) {
-            normalisedTurnAroundTimes.add(processInfo.getTurnAroundTime()/processInfo.getServiceTime());
-        }
-
-        turnAroundTimeValues = createGraphDataFromValues(normalisedTurnAroundTimes,algorithmName);
-
-        //create list of  Wait times
-        List<Integer> waitTimes = new ArrayList<>();
-        for(ProcessInfo processInfo: processList) {
-            waitTimes.add(processInfo.getWaitTime());
-        }
-
-        waitTimeValues = createGraphDataFromValues(waitTimes,algorithmName);
-
-
-
-        return new SimulationResult(algorithmName,waitTimeValues,turnAroundTimeValues,null,null);
-    }
-
-    private static GraphData createGraphDataFromValues(List<Integer> values, String algorithmName) {
-
-        Collections.sort(values);
-        int partition = values.size()/10;
+        int partition = processList.size()/10;
         int count = 1;
-        GraphData result = new GraphData(algorithmName);
-        Integer meanValue = 0;
-        List<Integer> temp = new ArrayList();
-        for(Integer value: values) {
-            temp.add(value);
+
+        //graph outputs
+        GraphData waitTimeGraph = new GraphData(algorithmName);
+        GraphData turnAroundTimeGraph = new GraphData(algorithmName);
+
+        List<Integer> tempWaitTimeValues = new ArrayList();
+        List<Integer> tempTurnAroundValues = new ArrayList();
+
+        for(ProcessInfo processInfo: processList) {
+
+            tempWaitTimeValues.add(processInfo.getWaitTime());
+            tempTurnAroundValues.add(processInfo.getTurnAroundTime()/processInfo.getServiceTime());
 
             count++;
 
             //als we aan volgende percentile zitten toevoegen die handel en uitrkenengemiddelnde
             if(count == partition) {
-                result.add(mean(temp));
-                temp.clear();
+                waitTimeGraph.add(mean(tempWaitTimeValues));
+                turnAroundTimeGraph.add(mean(tempTurnAroundValues));
+
+                tempTurnAroundValues.clear();
+                tempWaitTimeValues.clear();
+
                 count = 1;
             }
         }
 
-        result.add(meanValue);
+        return new SimulationResult(algorithmName,waitTimeGraph,turnAroundTimeGraph,null,null);
 
-        return result;
     }
+
+
+
 
     private static Integer mean(List<Integer> temp) {
         Integer sum = 0;

@@ -55,7 +55,7 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
 
     @Override
     public String getAlgorithmName() {
-        return null;
+        return "Highest Response Ratio";
     }
 
     @Override

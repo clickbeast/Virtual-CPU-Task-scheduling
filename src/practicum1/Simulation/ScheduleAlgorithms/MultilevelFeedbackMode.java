@@ -74,6 +74,6 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
 
     @Override
     public String getAlgorithmName() {
-        return null;
+        return "Multilevel Feedback Mode";
     }
 }

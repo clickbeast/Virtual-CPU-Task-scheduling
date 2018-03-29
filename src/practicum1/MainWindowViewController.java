@@ -206,8 +206,7 @@ public class MainWindowViewController implements Initializable {
         }
 
         List<SimulationResult> simulationResults = this.simulationManager.runAllAlgorithmSimulations();
-        //this.configureGraphsWithData(simulationResults);
-        this.configureGraphTest();
+        this.configureGraphsWithData(simulationResults);
 
 
         displayInfoMessage("Simulation Finished");

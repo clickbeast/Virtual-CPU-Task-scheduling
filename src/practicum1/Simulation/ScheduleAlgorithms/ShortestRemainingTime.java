@@ -62,6 +62,6 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
 
     @Override
     public String getAlgorithmName() {
-        return null;
+        return "Shortest Remaining Time";
     }
 }

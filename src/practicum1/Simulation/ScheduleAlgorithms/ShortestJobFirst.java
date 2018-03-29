@@ -53,7 +53,7 @@ public class ShortestJobFirst implements ProcessAlgorithm {
 
     @Override
     public String getAlgorithmName() {
-        return "shortestjobfirst";
+        return "Shortest Job First";
     }
 
 }
