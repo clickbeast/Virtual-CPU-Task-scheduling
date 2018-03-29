@@ -69,7 +69,7 @@ public class MainWindowViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing");
-        choiceBox.setItems(FXCollections.observableArrayList("10000 Processen","50000 Processen"));
+        choiceBox.setItems(FXCollections.observableArrayList("10000 Processen","20000 processen", "50000 Processen"));
         choiceBox.getSelectionModel().selectFirst();
         displayChoice.setItems(FXCollections.observableArrayList("TAT","Wait", "beide"));
         displayChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -268,6 +268,9 @@ public class MainWindowViewController implements Initializable {
         freezeUI();
         if(choiceBox.getSelectionModel().getSelectedItem() ==  "10000 Processen") {
             this.simulationManager.prepareToSchedule10000();
+        }
+        else if(choiceBox.getSelectionModel().getSelectedItem() ==  "20000 Processen") {
+            this.simulationManager.prepareToSchedule20000();
         }else{
             this.simulationManager.prepareToSchedule50000();
         }
