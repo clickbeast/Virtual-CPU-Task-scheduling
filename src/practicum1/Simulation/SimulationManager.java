@@ -64,18 +64,20 @@ public class SimulationManager {
         //VANAF 3de gaan er duidemlijk nog zaken mis
 
         //define all used algos algirithmn
-        ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe((ProcessList) this.processList.clone());
+        ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe(this.processList);
         results.add(this.runSimulation(firstComeFirstServe));
-        ProcessAlgorithm roundRobin = new RoundRobin((ProcessList) this.processList.clone(), 2);
-        results.add(this.runSimulation(roundRobin));
-//        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio((ProcessList) this.processList.clone());
-//        results.add(this.runSimulation(highestResponseRatio));
-//        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime((ProcessList) this.processList.clone());
-//        results.add(this.runSimulation(shortestRemainingTime));
-//        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst((ProcessList) this.processList.clone());
-//        results.add(this.runSimulation(shortestJobFirst));
-//        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode((ProcessList) this.processList.clone());
-//        results.add(this.runSimulation(multilevelFeedbackMode));
+        ProcessAlgorithm roundRobin2 = new RoundRobin(this.processList, 2);
+        results.add(this.runSimulation(roundRobin2));
+        ProcessAlgorithm roundRobin8 = new RoundRobin(this.processList, 8);
+        results.add(this.runSimulation(roundRobin8));
+        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio(this.processList);
+        results.add(this.runSimulation(highestResponseRatio));
+        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime(this.processList);
+        results.add(this.runSimulation(shortestRemainingTime));
+        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst(this.processList);
+        results.add(this.runSimulation(shortestJobFirst));
+        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
+        results.add(this.runSimulation(multilevelFeedbackMode));
 
 
 

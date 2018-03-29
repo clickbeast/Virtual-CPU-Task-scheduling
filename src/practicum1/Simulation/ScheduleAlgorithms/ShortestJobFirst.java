@@ -18,7 +18,7 @@ public class ShortestJobFirst implements ProcessAlgorithm {
 
     public ShortestJobFirst(ProcessList processList) {
         this.result = new ProcessList();
-        this.processList = processList;
+        this.processList = new ProcessList(processList);
         this.elapsedTime = 0;
         this.que = new PriorityQueue<>(new ShortestFirst());
     }
@@ -44,7 +44,7 @@ public class ShortestJobFirst implements ProcessAlgorithm {
             exiting = que.poll();
             elapsedTime += exiting.getServiceTime();
             exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
-            exiting.setWaitTime(elapsedTime - exiting.getWaitTime() - exiting.getServiceTime());
+            exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
             this.result.add(exiting);
         }
 

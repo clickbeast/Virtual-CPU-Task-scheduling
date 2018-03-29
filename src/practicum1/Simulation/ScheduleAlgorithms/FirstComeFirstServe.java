@@ -12,8 +12,7 @@ public class FirstComeFirstServe implements ProcessAlgorithm {
     private int elapsedTime;
 
     public FirstComeFirstServe(ProcessList processList) {
-
-        this.processList = processList;
+        this.processList = new ProcessList(processList);
         this.elapsedTime = 0;
     }
 

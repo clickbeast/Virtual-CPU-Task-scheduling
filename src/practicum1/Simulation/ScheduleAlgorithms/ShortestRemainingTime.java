@@ -15,8 +15,8 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
     private int elapsedTime;
 
     public ShortestRemainingTime(ProcessList processList) {
-        this.result = (ProcessList) processList.clone();
-        this.processList = processList;
+        this.result = new ProcessList();
+        this.processList = new ProcessList(processList);
         this.elapsedTime = 0;
         this.que = new PriorityQueue<>(new ShortestRemaining());
     }

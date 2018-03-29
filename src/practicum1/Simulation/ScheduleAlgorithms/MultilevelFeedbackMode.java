@@ -16,8 +16,9 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
     private int elapsedTime;
 
     public MultilevelFeedbackMode(ProcessList processList) {
-        this.result = (ProcessList) processList.clone();
-        this.processList = processList;
+
+        this.result = new ProcessList();
+        this.processList = new ProcessList(processList);
         this.que = new LinkedList<>();
         this.que2 = new LinkedList<>();
         this.que3 = new LinkedList<>();

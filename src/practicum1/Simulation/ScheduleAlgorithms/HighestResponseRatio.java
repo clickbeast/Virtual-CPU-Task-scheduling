@@ -17,7 +17,7 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
 
     public HighestResponseRatio(ProcessList processList) {
         this.result = new ProcessList();
-        this.processList = processList;
+        this.processList = new ProcessList(processList);
         this.elapsedTime = 0;
         this.que = new PriorityQueue<>(new ShortestTATFirst(this));
     }

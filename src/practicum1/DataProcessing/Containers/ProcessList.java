@@ -8,6 +8,13 @@ public class ProcessList extends LinkedList<ProcessInfo> {
         super();
     }
 
+    public ProcessList(ProcessList processList) {
+        super();
+        for(ProcessInfo processInfo: processList){
+            this.add(new ProcessInfo(processInfo));
+        }
+    }
+
 
     //TODO make calculations mean work
 

@@ -16,7 +16,7 @@ public class RoundRobin implements  ProcessAlgorithm{
 
     public RoundRobin(ProcessList processList, int q) {
         this.result = new ProcessList();
-        this.processList = processList;
+        this.processList = new ProcessList(processList);
         this.elapsedTime = 0;
         this.que = new LinkedList<>();
         this.q = q;
@@ -25,7 +25,6 @@ public class RoundRobin implements  ProcessAlgorithm{
     @Override
     public ProcessList run() {
 
-        int last = 0;
         ProcessInfo exiting;
 
         while(this.processList.size() != 0 || this.que.size() != 0){
@@ -34,7 +33,6 @@ public class RoundRobin implements  ProcessAlgorithm{
 
                 if(this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()){
                     elapsedTime = processList.getFirst().getArrivalTime();
-                    last = processList.getFirst().getId();
                 }
 
                 if (elapsedTime >= processList.getFirst().getArrivalTime()) {
@@ -58,7 +56,7 @@ public class RoundRobin implements  ProcessAlgorithm{
 
     @Override
     public String getAlgorithmName() {
-        return "Round Robin";
+        return "Round Robin, q= " + q;
     }
 
     private void print(){

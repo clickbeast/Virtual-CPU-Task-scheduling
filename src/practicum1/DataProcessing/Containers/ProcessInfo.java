@@ -25,6 +25,15 @@ public class ProcessInfo {
         this.lasRan = 0;
     }
 
+    public ProcessInfo(ProcessInfo processInfo) {
+        this.arrivalTime = processInfo.arrivalTime;
+        //bedieningstijd
+        this.serviceTime = processInfo.serviceTime;
+        this.timeToServe = serviceTime;
+        this.id = processInfo.id;
+        this.lasRan = 0;
+    }
+
     public int getTurnAroundTime() {
         return turnAroundTime;
     }
