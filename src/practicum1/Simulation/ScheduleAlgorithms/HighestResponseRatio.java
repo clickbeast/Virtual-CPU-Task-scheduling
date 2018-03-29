@@ -6,6 +6,7 @@ import practicum1.Simulation.Comparators.ReOrderComparator;
 import practicum1.Simulation.Comparators.ShortestTATFirst;
 import practicum1.Simulation.Comparators.TimeInterface;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
@@ -49,7 +50,7 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
             this.result.add(exiting);
         }
 
-        result.sort(new ReOrderComparator());
+        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
         return result;
     }
 

@@ -2,9 +2,9 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
-import practicum1.Simulation.Comparators.ReOrderComparator;
 import practicum1.Simulation.Comparators.ShortestRemaining;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class ShortestRemainingTime implements ProcessAlgorithm {
@@ -18,7 +18,7 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
         this.result = new ProcessList();
         this.processList = new ProcessList(processList);
         this.elapsedTime = 0;
-        this.que = new PriorityQueue<>(new ShortestRemaining());
+        this.que = new PriorityQueue<>(Comparator.comparingInt(ProcessInfo::getTimeToServe));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
             this.result.add(exiting);
         }
 
-        result.sort(new ReOrderComparator());
+        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
         return result;
     }
 

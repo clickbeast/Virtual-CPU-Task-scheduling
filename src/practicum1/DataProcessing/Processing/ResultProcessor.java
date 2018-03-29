@@ -25,7 +25,7 @@ public class ResultProcessor {
         //sort processlist on service time
         Collections.sort(processList , Comparator.comparingInt(ProcessInfo::getServiceTime));
 
-        int partition = processList.size()/10;
+        int partition = processList.size()/100;
         int count = 1;
 
 
@@ -33,8 +33,8 @@ public class ResultProcessor {
         GraphData waitTimeGraph = new GraphData(algorithmName);
         GraphData turnAroundTimeGraph = new GraphData(algorithmName);
 
-        List<Double> tempWaitTimeValues = new ArrayList();
-        List<Double> tempTurnAroundValues = new ArrayList();
+        List<Double> tempWaitTimeValues = new ArrayList<>();
+        List<Double> tempTurnAroundValues = new ArrayList<>();
 
         for(ProcessInfo processInfo: processList) {
 

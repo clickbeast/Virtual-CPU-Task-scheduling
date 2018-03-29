@@ -4,6 +4,7 @@ import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.Simulation.Comparators.ReOrderComparator;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class RoundRobin implements  ProcessAlgorithm{
@@ -50,7 +51,7 @@ public class RoundRobin implements  ProcessAlgorithm{
             }
         }
 
-        result.sort(new ReOrderComparator());
+        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
         return result;
     }
 
