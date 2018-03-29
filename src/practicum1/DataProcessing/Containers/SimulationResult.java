@@ -10,6 +10,8 @@ public class SimulationResult {
 
     private GraphData grafiekDataBedieningsTijd;
     private GraphData grafiekDataOmploopTijd;
+
+    //TODO
     private Double totalAverageTAT;
     private Double totalAverageWaitTime;
 
@@ -40,5 +42,7 @@ public class SimulationResult {
         return totalAverageWaitTime;
     }
 
-
+    public String getUsedAlgorithmName() {
+        return title;
+    }
 }

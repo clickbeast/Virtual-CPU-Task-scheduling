@@ -95,7 +95,6 @@ public class SimulationManager {
         System.out.println("Running algorithm: " + processAlgorithm.getAlgorithmName());
         viewController.displayInfoMessage("Running Algorithm: " + processAlgorithm.getAlgorithmName());
 
-
         processAlgorithm.run();
 
         //create the a result object based on the given run

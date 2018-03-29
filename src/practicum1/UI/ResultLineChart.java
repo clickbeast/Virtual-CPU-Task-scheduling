@@ -2,6 +2,8 @@ package practicum1.UI;
 
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import practicum1.DataProcessing.Containers.GraphData;
 import practicum1.DataProcessing.Containers.SimulationResult;
 
 import java.util.List;
@@ -13,35 +15,24 @@ import java.util.List;
 public class ResultLineChart extends LineChart <String, Number> {
 
 
-    public ResultLineChart(Axis<String> stringAxis, Axis<Number> numberAxis) {
+    public ResultLineChart(Axis<String> stringAxis, Axis<Number> numberAxis, String title) {
         super(stringAxis, numberAxis);
-
-        this.configureBasics("bedieningstijd");
-
+        this.configureBasics(title);
     }
 
     public void configureBasics(String title) {
         this.setTitle(title);
     }
 
+    public void addSeries(GraphData grafiekDataBedieningsTijd, String usedAlgorithmName) {
 
-    /**
-     * Takes in all results from a simulation and uses the supplied graph data to add an element to this graph.
-     * @param simulationResults
-     */
-    public void addAllResults(List<SimulationResult> simulationResults) {
-        for(SimulationResult simulationResult: simulationResults) {
-            this.addResult(simulationResult);
+        XYChart.Series series = new XYChart.Series<>();
+        series.setName(usedAlgorithmName);
+        int percentileCount  = 10;
+        for(Integer number: grafiekDataBedieningsTijd) {
+            series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number.intValue()));
+            percentileCount+=10;
         }
     }
-
-    public void addResult(SimulationResult simulationResult) {
-        //Add new series
-    }
-
-    public void addNewSeries(String title, List<Integer> percentiles) {
-        //TODO create series AND ADD
-    }
-
 
 }

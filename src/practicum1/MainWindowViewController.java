@@ -12,9 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import practicum1.DataProcessing.Containers.SimulationResult;
 import practicum1.Simulation.SimulationManager;
+import practicum1.UI.ResultLineChart;
 
 import java.net.URL;
 import java.util.List;
@@ -64,8 +66,6 @@ public class MainWindowViewController implements Initializable {
         choiceBox.getSelectionModel().selectFirst();
         displayInfoMessage("Preparing: Reading XML List");
 
-        //Initialize the graphs
-
     }
 
 
@@ -80,14 +80,12 @@ public class MainWindowViewController implements Initializable {
     }
 
 
-
     /**
      *  Layout
      */
 
     //TODO
     public void resetGraphView() {
-
 
     }
 
@@ -96,63 +94,55 @@ public class MainWindowViewController implements Initializable {
 
         this.displayInfoMessage("Creating Graphs, please wait.");
 
+        //using test list:
+        //TODO
+        //...
+
         //clean out current graphs out of the HBOX
         graphView.getChildren().clear();
 
-        //Make elements
-        //TODO move to nice place
+        //Prepare Axis
+
+        String turnAroundTimeLineChartTitle = "Genormaliseerde omlooptijd in functie van bedieningstijd";
+        String waitTimeLineChartTitle = "Wachttijd in functie van bedieningstijd";
+        ResultLineChart turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Normalised Turn Around Time"),turnAroundTimeLineChartTitle);
+        ResultLineChart waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
+
+        this.graphView.getChildren().add(turnAroundTimeLineChart);
+        this.graphView.getChildren().add(waitTimeLineChart);
+
+        this.graphView.setVgrow(turnAroundTimeLineChart,Priority.ALWAYS);
+        this.graphView.setVgrow(waitTimeLineChart,Priority.ALWAYS);
+
+        //add all chart data
+        for(SimulationResult simulationResult: simulationResults) {
+            turnAroundTimeLineChart.addSeries(simulationResult.getGrafiekDataOmploopTijd(), simulationResult.getUsedAlgorithmName());
+            waitTimeLineChart.addSeries(simulationResult.getGrafiekDataBedieningsTijd(),simulationResult.getUsedAlgorithmName());
+        }
+
+    }
 
 
-        //fill up the HBOX with the new graph
-
-
+    public CategoryAxis createGraphXAxis() {
         final CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Percentile Of Time Required");
+        return xAxis;
+    }
+
+    public NumberAxis createGraphYAxis(String name) {
         final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Month");
-
-        final LineChart<String,Number> lineChart =
-                new LineChart<String,Number>(xAxis,yAxis);
-
-        lineChart.setTitle("Stock Monitoring, 2010");
-
-        XYChart.Series series = new XYChart.Series();
-        series.setName("My portfolio");
-
-        series.getData().add(new XYChart.Data("Jan", 23));
-        series.getData().add(new XYChart.Data("Feb", 14));
-        series.getData().add(new XYChart.Data("Mar", 15));
-        series.getData().add(new XYChart.Data("Apr", 24));
-        series.getData().add(new XYChart.Data("May", 34));
-        series.getData().add(new XYChart.Data("Jun", 36));
-        series.getData().add(new XYChart.Data("Jul", 22));
-        series.getData().add(new XYChart.Data("Aug", 45));
-        series.getData().add(new XYChart.Data("Sep", 43));
-        series.getData().add(new XYChart.Data("Oct", 17));
-        series.getData().add(new XYChart.Data("Nov", 29));
-        series.getData().add(new XYChart.Data("Dec", 25));
-
-
-        this.graphView.getChildren().add(lineChart);
-        lineChart.getData().add(series);
-
-
-
+        yAxis.setLabel(name);
+        return yAxis;
     }
 
-
-
-    //updates all the graphs
-    public void updateGraphs() {
-        //TODO
-
-
-    }
 
 
     /**
      *  Actions
      *
      */
+
+
 
     //gets called when the user wants to run a specific algorithm
     public void runAction() {
@@ -167,23 +157,23 @@ public class MainWindowViewController implements Initializable {
         List<SimulationResult> simulationResults = this.simulationManager.runAllAlgorithmSimulations();
         this.configureGraphsWithData(simulationResults);
 
-        //TODO
-        //create graph based on simulation results.
         displayInfoMessage("Done");
-
         unFreezeUI();
     }
 
     //prevent user from using UI, comonly used while running algorithm
     public void freezeUI() {
         this.choiceBox.setDisable(true);
+
         this.runButton.setDisable(true);
     }
 
     public void unFreezeUI() {
         this.choiceBox.setDisable(false);
-        this.choiceBox.setDisable(false);
+        this.runButton.setDisable(false);
     }
+
+
 
     /**
      *  Alerts
@@ -194,11 +184,6 @@ public class MainWindowViewController implements Initializable {
     public void displayInfoMessage(String message) {
         alertInfoLabel.setText("Info: " + message);
     }
-
-
-
-
-    //TODO reageer op juiste manier op UI INPUT
 
 
 
