@@ -38,6 +38,7 @@ public class ShortestJobFirst implements ProcessAlgorithm {
 
                 while (elapsedTime >= processList.getFirst().getArrivalTime()) {
                     que.add(processList.removeFirst());
+                    if(processList.size() == 0) break;
                 }
             }
             exiting = que.poll();

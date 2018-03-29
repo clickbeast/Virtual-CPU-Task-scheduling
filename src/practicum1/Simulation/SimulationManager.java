@@ -63,19 +63,20 @@ public class SimulationManager {
 
 
         //define all used algos algirithmn
-        ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe(this.processList);
-        ProcessAlgorithm roundRobin = new RoundRobin(this.processList, 2);
-        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio(this.processList);
-        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime(this.processList);
-        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst(this.processList);
-        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
-
-        //results.add(this.runSimulation(roundRobin));
+        ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe((ProcessList) this.processList.clone());
         results.add(this.runSimulation(firstComeFirstServe));
-        results.add(this.runSimulation(shortestJobFirst));
+
+        ProcessAlgorithm roundRobin = new RoundRobin((ProcessList) this.processList.clone(), 2);
+        results.add(this.runSimulation(roundRobin));
+        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio((ProcessList) this.processList.clone());
+        results.add(this.runSimulation(highestResponseRatio));
+        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime((ProcessList) this.processList.clone());
         results.add(this.runSimulation(shortestRemainingTime));
-        ///results.add(this.runSimulation(highestResponseRatio));
-        //results.add(this.runSimulation(multilevelFeedbackMode));
+        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst((ProcessList) this.processList.clone());
+        results.add(this.runSimulation(shortestJobFirst));
+        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode((ProcessList) this.processList.clone());
+        results.add(this.runSimulation(multilevelFeedbackMode));
+
 
 
         viewController.displayInfoMessage("Done Running Algorithms");
