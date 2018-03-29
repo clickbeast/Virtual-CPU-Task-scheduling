@@ -2,19 +2,20 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
+import practicum1.Simulation.Comparators.ReOrderComparator;
 
 import java.util.LinkedList;
 
 public class RoundRobin implements  ProcessAlgorithm{
 
-    private ProcessList backup;
+    private ProcessList result;
     private ProcessList processList;
     private LinkedList<ProcessInfo> que;
     private int elapsedTime;
     private int q;
 
     public RoundRobin(ProcessList processList, int q) {
-        this.backup = (ProcessList) processList.clone();
+        this.result = new ProcessList();
         this.processList = processList;
         this.elapsedTime = 0;
         this.que = new LinkedList<>();
@@ -22,7 +23,7 @@ public class RoundRobin implements  ProcessAlgorithm{
     }
 
     @Override
-    public void run() {
+    public ProcessList run() {
 
         int last = 0;
         ProcessInfo exiting;
@@ -47,21 +48,12 @@ public class RoundRobin implements  ProcessAlgorithm{
                 exiting = que.removeFirst();
                 exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
                 exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
+                this.result.add(exiting);
             }
         }
 
-        boolean found = false;
-        int time = 0;
-        for(ProcessInfo processInfo: backup){
-            if (found) time += processInfo.getServiceTime();
-            if(processInfo.getId() == last){
-                found = true;
-                time = processInfo.getArrivalTime() + processInfo.getServiceTime();
-            }
-        }
-        System.out.println(time);
-        System.out.println(elapsedTime);
-
+        result.sort(new ReOrderComparator());
+        return result;
     }
 
     @Override

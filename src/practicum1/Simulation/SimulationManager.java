@@ -5,6 +5,8 @@ import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Processing.ResultProcessor;
 import practicum1.DataProcessing.Processing.XMLProcessor;
 import practicum1.DataProcessing.Containers.SimulationResult;
+import practicum1.Simulation.Comparators.ShortestJobFirst;
+import practicum1.Simulation.Comparators.ShortestRemainingTime;
 import practicum1.Simulation.ScheduleAlgorithms.*;
 
 import java.util.ArrayList;

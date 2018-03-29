@@ -2,27 +2,29 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
+import practicum1.Simulation.Comparators.ReOrderComparator;
+import practicum1.Simulation.Comparators.ShortestTATFirst;
+import practicum1.Simulation.Comparators.TimeInterface;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
 
-    private ProcessList backup;
+    private ProcessList result;
     private ProcessList processList;
     private PriorityQueue<ProcessInfo> que;
     private int elapsedTime;
 
     public HighestResponseRatio(ProcessList processList) {
-        this.backup = (ProcessList) processList.clone();
+        this.result = new ProcessList();
         this.processList = processList;
         this.elapsedTime = 0;
-        this.que = new PriorityQueue<>(new ShortestATFirst(this));
+        this.que = new PriorityQueue<>(new ShortestTATFirst(this));
     }
 
     @Override
-    public void run() {
-        int last = 0;
+    public ProcessList run() {
+
         ProcessInfo exiting;
 
         while(this.processList.size() != 0 || this.que.size() != 0) {
@@ -30,7 +32,6 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
             if(processList.size() != 0) {
                 if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
                     elapsedTime = processList.getFirst().getArrivalTime();
-                    last = processList.getFirst().getId();
                 }
 
                 while (elapsedTime >= processList.getFirst().getArrivalTime()) {
@@ -45,20 +46,11 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
             elapsedTime += exiting.getServiceTime();
             exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
             exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
+            this.result.add(exiting);
         }
 
-        boolean found = false;
-        int time = 0;
-        for(ProcessInfo info: backup){
-            if(info.getId() == last){
-                time = info.getArrivalTime();
-                found = true;
-            }
-            if(found) time += info.getServiceTime();
-        }
-        System.out.println(time);
-        System.out.println(elapsedTime);
-
+        result.sort(new ReOrderComparator());
+        return result;
     }
 
     @Override
@@ -72,22 +64,3 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
     }
 }
 
-class ShortestATFirst implements Comparator<ProcessInfo> {
-
-    private TimeInterface timeInterface;
-
-    public ShortestATFirst(TimeInterface timeInterface){
-        this.timeInterface = timeInterface;
-    }
-
-    @Override
-    public int compare(ProcessInfo service1, ProcessInfo service2){
-
-        return (timeInterface.getTime() - service2.getArrivalTime() + service2.getServiceTime())/service2.getServiceTime() -
-                (timeInterface.getTime() - service1.getArrivalTime() + service1.getServiceTime())/service1.getServiceTime();
-    }
-}
-
-interface TimeInterface{
-    int getTime();
-}
