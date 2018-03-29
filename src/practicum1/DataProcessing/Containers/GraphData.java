@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 //List of 100 values for generating an XY Graph
 
-public class GraphData extends ArrayList<Integer> {
+public class GraphData extends ArrayList<Double> {
 
 
     private String title;

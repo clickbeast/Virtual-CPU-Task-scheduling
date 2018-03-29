@@ -11,10 +11,7 @@ import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
 import practicum1.DataProcessing.Containers.SimulationResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ResultProcessor {
 
@@ -24,26 +21,25 @@ public class ResultProcessor {
         //Calculate de gemiddlede tat en turn around time
         System.out.println("Generating simulationresult");
 
+
         //sort processlist on service time
         Collections.sort(processList , Comparator.comparingInt(ProcessInfo::getServiceTime));
 
         int partition = processList.size()/10;
         int count = 1;
 
-        //@jonas 10 values for each percinile for the wait graph and the turn around graph
 
         //graph outputs
         GraphData waitTimeGraph = new GraphData(algorithmName);
         GraphData turnAroundTimeGraph = new GraphData(algorithmName);
 
-        List<Integer> tempWaitTimeValues = new ArrayList();
-        List<Integer> tempTurnAroundValues = new ArrayList();
+        List<Double> tempWaitTimeValues = new ArrayList();
+        List<Double> tempTurnAroundValues = new ArrayList();
 
         for(ProcessInfo processInfo: processList) {
 
-            tempWaitTimeValues.add(processInfo.getWaitTime());
-            tempTurnAroundValues.add(processInfo.getTurnAroundTime()/processInfo.getServiceTime());
-
+            tempWaitTimeValues.add((double) processInfo.getWaitTime());
+            tempTurnAroundValues.add(((double) processInfo.getTurnAroundTime())/(double) processInfo.getServiceTime());
             count++;
 
             //als we aan volgende percentile zitten toevoegen die handel en uitrkenengemiddelnde
@@ -58,6 +54,11 @@ public class ResultProcessor {
             }
         }
 
+        System.out.println("SOLUTOION");
+        System.out.println(Arrays.toString(tempTurnAroundValues.toArray()));
+        System.out.println(Arrays.toString(tempWaitTimeValues.toArray()));
+
+
         return new SimulationResult(algorithmName,waitTimeGraph,turnAroundTimeGraph,null,null);
 
     }
@@ -65,10 +66,10 @@ public class ResultProcessor {
 
 
 
-    private static Integer mean(List<Integer> temp) {
-        Integer sum = 0;
+    private static Double mean(List<Double> temp) {
+        Double sum = 0.0;
         if(!temp.isEmpty()) {
-            for (Integer mark : temp) {
+            for (Double mark : temp) {
                 sum += mark;
             }
             return sum / temp.size();

@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import practicum1.DataProcessing.Containers.GraphData;
 import practicum1.DataProcessing.Containers.SimulationResult;
 import practicum1.Simulation.SimulationManager;
+import practicum1.UI.LogarithmicAxis;
 import practicum1.UI.ResultLineChart;
 
 import java.net.URL;
@@ -94,6 +95,8 @@ public class MainWindowViewController implements Initializable {
 
     public void configureGraphsWithData(List<SimulationResult> simulationResults) {
 
+
+
         this.displayInfoMessage("Creating Graphs, please wait.");
 
         //clean out current graphs out of the VBOX
@@ -102,8 +105,10 @@ public class MainWindowViewController implements Initializable {
         //Set Graph titles
         String turnAroundTimeLineChartTitle = "Genormaliseerde omlooptijd in functie van bedieningstijd";
         String waitTimeLineChartTitle = "Wachttijd in functie van bedieningstijd";
+        final LogarithmicAxis yAxis2 = new LogarithmicAxis();
+        yAxis2.setLabel("Normalised Turn Around Time");
 
-        ResultLineChart turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Normalised Turn Around Time"),turnAroundTimeLineChartTitle);
+        ResultLineChart turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(),yAxis2,turnAroundTimeLineChartTitle);
         ResultLineChart waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
 
         this.graphView.getChildren().add(turnAroundTimeLineChart);
@@ -120,56 +125,58 @@ public class MainWindowViewController implements Initializable {
             waitTimeLineChart.addSeries(simulationResult.getGrafiekDataBedieningsTijd(),simulationResult.getUsedAlgorithmName());
         }
 
+
+
     }
 
 
     public void configureGraphTest() {
-        graphView.getChildren().clear();
-
-        //Set Graph titles
-        String turnAroundTimeLineChartTitle = "Genormaliseerde omlooptijd in functie van bedieningstijd";
-        String waitTimeLineChartTitle = "Wachttijd in functie van bedieningstijd";
-
-        ResultLineChart turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Normalised Turn Around Time"),turnAroundTimeLineChartTitle);
-        ResultLineChart waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
-
-        this.graphView.getChildren().add(turnAroundTimeLineChart);
-        this.graphView.getChildren().add(waitTimeLineChart);
-
-
-        //make graphs fill windows
-        this.graphView.setVgrow(turnAroundTimeLineChart,Priority.ALWAYS);
-        this.graphView.setVgrow(waitTimeLineChart,Priority.ALWAYS);
-
-        GraphData values = new GraphData("bonjour");
-        values.add(1);
-        values.add(3);
-        values.add(4);
-        values.add(7);
-        values.add(6);
-        values.add(10);
-        values.add(12);
-        values.add(13);
-        values.add(14);
-        values.add(15);
-
-        GraphData values2 = new GraphData("bonjour");
-        values2.add(3);
-        values2.add(7);
-        values2.add(18);
-        values2.add(7);
-        values2.add(5);
-        values2.add(2);
-        values2.add(12);
-        values2.add(3);
-        values2.add(14);
-        values2.add(20);
-
-
-        turnAroundTimeLineChart.addSeries(values,"TEst series");
-        waitTimeLineChart.addSeries(values, "con");
-        turnAroundTimeLineChart.addSeries(values2,"TEst series");
-        waitTimeLineChart.addSeries(values2, "con");
+//        graphView.getChildren().clear();
+//
+//        //Set Graph titles
+//        String turnAroundTimeLineChartTitle = "Genormaliseerde omlooptijd in functie van bedieningstijd";
+//        String waitTimeLineChartTitle = "Wachttijd in functie van bedieningstijd";
+//
+//        ResultLineChart turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Normalised Turn Around Time"),turnAroundTimeLineChartTitle);
+//        ResultLineChart waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
+//
+//        this.graphView.getChildren().add(turnAroundTimeLineChart);
+//        this.graphView.getChildren().add(waitTimeLineChart);
+//
+//
+//        //make graphs fill windows
+//        this.graphView.setVgrow(turnAroundTimeLineChart,Priority.ALWAYS);
+//        this.graphView.setVgrow(waitTimeLineChart,Priority.ALWAYS);
+//
+//        GraphData values = new GraphData("bonjour");
+//        values.add(1);
+//        values.add(3);
+//        values.add(4);
+//        values.add(7);
+//        values.add(6);
+//        values.add(10);
+//        values.add(12);
+//        values.add(13);
+//        values.add(14);
+//        values.add(15);
+//
+//        GraphData values2 = new GraphData("bonjour");
+//        values2.add(3);
+//        values2.add(7);
+//        values2.add(18);
+//        values2.add(7);
+//        values2.add(5);
+//        values2.add(2);
+//        values2.add(12);
+//        values2.add(3);
+//        values2.add(14);
+//        values2.add(20);
+//
+//
+//        turnAroundTimeLineChart.addSeries(values,"TEst series");
+//        waitTimeLineChart.addSeries(values, "con");
+//        turnAroundTimeLineChart.addSeries(values2,"TEst series");
+//        waitTimeLineChart.addSeries(values2, "con");
 
     }
 
@@ -184,6 +191,9 @@ public class MainWindowViewController implements Initializable {
     public NumberAxis createGraphYAxis(String name) {
         final NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel(name);
+
+
+
         return yAxis;
     }
 

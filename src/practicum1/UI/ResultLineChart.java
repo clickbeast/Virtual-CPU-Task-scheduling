@@ -6,6 +6,7 @@ import javafx.scene.chart.XYChart;
 import practicum1.DataProcessing.Containers.GraphData;
 import practicum1.DataProcessing.Containers.SimulationResult;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -26,15 +27,15 @@ public class ResultLineChart extends LineChart <String, Number> {
 
     public void addSeries(GraphData grafiekDataBedieningsTijd, String usedAlgorithmName) {
 
-
+        System.out.println(Arrays.toString(grafiekDataBedieningsTijd.toArray()));
 
         XYChart.Series series = new XYChart.Series<>();
         series.setName(usedAlgorithmName);
 
 
         int percentileCount  = 10;
-        for(Integer number: grafiekDataBedieningsTijd) {
-            series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number.intValue()));
+        for(Double number: grafiekDataBedieningsTijd) {
+            series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number));
             percentileCount+=10;
         }
 

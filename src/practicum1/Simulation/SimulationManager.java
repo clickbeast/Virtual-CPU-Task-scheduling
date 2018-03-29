@@ -61,21 +61,21 @@ public class SimulationManager {
 
         List<SimulationResult> results = new ArrayList<>();
 
+        //VANAF 3de gaan er duidemlijk nog zaken mis
 
         //define all used algos algirithmn
         ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe((ProcessList) this.processList.clone());
         results.add(this.runSimulation(firstComeFirstServe));
-
         ProcessAlgorithm roundRobin = new RoundRobin((ProcessList) this.processList.clone(), 2);
         results.add(this.runSimulation(roundRobin));
-        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio((ProcessList) this.processList.clone());
-        results.add(this.runSimulation(highestResponseRatio));
-        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime((ProcessList) this.processList.clone());
-        results.add(this.runSimulation(shortestRemainingTime));
-        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst((ProcessList) this.processList.clone());
-        results.add(this.runSimulation(shortestJobFirst));
-        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode((ProcessList) this.processList.clone());
-        results.add(this.runSimulation(multilevelFeedbackMode));
+//        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio((ProcessList) this.processList.clone());
+//        results.add(this.runSimulation(highestResponseRatio));
+//        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime((ProcessList) this.processList.clone());
+//        results.add(this.runSimulation(shortestRemainingTime));
+//        ProcessAlgorithm shortestJobFirst = new ShortestJobFirst((ProcessList) this.processList.clone());
+//        results.add(this.runSimulation(shortestJobFirst));
+//        ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode((ProcessList) this.processList.clone());
+//        results.add(this.runSimulation(multilevelFeedbackMode));
 
 
 
