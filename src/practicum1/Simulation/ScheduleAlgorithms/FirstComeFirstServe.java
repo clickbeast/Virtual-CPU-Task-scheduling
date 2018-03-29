@@ -18,7 +18,7 @@ public class FirstComeFirstServe implements ProcessAlgorithm {
     }
 
     @Override
-    public void run() {
+    public ProcessList run() {
 
         for(ProcessInfo process: processList){
 
@@ -31,6 +31,8 @@ public class FirstComeFirstServe implements ProcessAlgorithm {
             process.setTurnAroundTime(process.getServiceTime() + process.getWaitTime());
             elapsedTime += process.getServiceTime();
         }
+
+        return this.processList;
     }
 
     @Override
