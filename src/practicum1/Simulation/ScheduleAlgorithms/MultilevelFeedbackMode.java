@@ -45,17 +45,21 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
             }
 
             if(que.size() != 0){
-                elapsedTime+=que.getFirst().serve(64);
+                elapsedTime+=que.getFirst().serve(128);
                 pass(que, que2);
             } else if(que2.size() != 0){
-                elapsedTime+=que2.getFirst().serve(128);
+                elapsedTime+=que2.getFirst().serve(256);
                 pass(que2, que3);
             } else if(que3.size() != 0){
+                elapsedTime+=que3.getFirst().serve(256);
+                pass(que3, que3);
+                /*
                 exiting = que3.removeFirst();
                 elapsedTime+=exiting.getTimeToServe();
                 exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
                 exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
                 this.result.add(exiting);
+                */
             }
         }
 

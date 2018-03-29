@@ -41,10 +41,10 @@ public class MainWindowViewController implements Initializable {
     private SimulationManager simulationManager;
     public ChoiceBox choiceBox;
     public ChoiceBox displayChoice;
-    public boolean displayTAT, displayWait, started = false;
+    private boolean displayTAT, displayWait, started = false;
     public Button runButton;
 
-    public List<SimulationResult> simulationResults;
+    private List<SimulationResult> simulationResults;
 
 
     //holds all the graphs
@@ -144,17 +144,16 @@ public class MainWindowViewController implements Initializable {
         if(displayTAT) {
             turnAroundTimeLineChart = new ResultLineChart(createGraphXAxis(), yAxis2, turnAroundTimeLineChartTitle);
             this.graphView.getChildren().add(turnAroundTimeLineChart);
+            //make graph fill windows
             this.graphView.setVgrow(turnAroundTimeLineChart,Priority.ALWAYS);
         }
         if (displayWait) {
             waitTimeLineChart = new ResultLineChart(createGraphXAxis(),createGraphYAxis("Wait Time"),waitTimeLineChartTitle);
             this.graphView.getChildren().add(waitTimeLineChart);
-            //make graphs fill windows
+            //make graph fill windows
             this.graphView.setVgrow(waitTimeLineChart,Priority.ALWAYS);
 
         }
-
-
 
         //add all chart data
         for(SimulationResult simulationResult: simulationResults) {
@@ -232,8 +231,6 @@ public class MainWindowViewController implements Initializable {
     public NumberAxis createGraphYAxis(String name) {
         final NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel(name);
-
-
 
         return yAxis;
     }

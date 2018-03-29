@@ -36,7 +36,7 @@ public class ResultLineChart extends LineChart <String, Number> {
         int percentileCount  = 10;
         for(Double number: grafiekDataBedieningsTijd) {
             series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number));
-            percentileCount+=10;
+            percentileCount+=1;
         }
 
         this.getData().add(series);

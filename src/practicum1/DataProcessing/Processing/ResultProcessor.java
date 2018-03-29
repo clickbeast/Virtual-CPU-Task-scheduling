@@ -26,31 +26,43 @@ public class ResultProcessor {
         Collections.sort(processList , Comparator.comparingInt(ProcessInfo::getServiceTime));
 
         int partition = processList.size()/100;
-        int count = 1;
+        int count = 0;
 
 
         //graph outputs
         GraphData waitTimeGraph = new GraphData(algorithmName);
         GraphData turnAroundTimeGraph = new GraphData(algorithmName);
+        LinkedList<Double> offsets = new LinkedList<>();
 
         List<Double> tempWaitTimeValues = new ArrayList<>();
         List<Double> tempTurnAroundValues = new ArrayList<>();
 
+        double start = -1, mean = 0;
+
         for(ProcessInfo processInfo: processList) {
 
+            if(start == -1) start = processInfo.getServiceTime();
+
+            mean += processInfo.getServiceTime();
             tempWaitTimeValues.add((double) processInfo.getWaitTime());
             tempTurnAroundValues.add(((double) processInfo.getTurnAroundTime())/(double) processInfo.getServiceTime());
             count++;
 
             //als we aan volgende percentile zitten toevoegen die handel en uitrkenengemiddelnde
             if(count == partition) {
+
+                mean = mean/count;
+                mean-=start;
+
+                offsets.add(mean);
                 waitTimeGraph.add(mean(tempWaitTimeValues));
                 turnAroundTimeGraph.add(mean(tempTurnAroundValues));
 
                 tempTurnAroundValues.clear();
                 tempWaitTimeValues.clear();
 
-                count = 1;
+                count = 0;
+                start = -1;
             }
         }
 
@@ -59,12 +71,9 @@ public class ResultProcessor {
         System.out.println(Arrays.toString(tempWaitTimeValues.toArray()));
 
 
-        return new SimulationResult(algorithmName,waitTimeGraph,turnAroundTimeGraph,null,null);
+        return new SimulationResult(algorithmName,waitTimeGraph,turnAroundTimeGraph, offsets,null,null);
 
     }
-
-
-
 
     private static Double mean(List<Double> temp) {
         Double sum = 0.0;
