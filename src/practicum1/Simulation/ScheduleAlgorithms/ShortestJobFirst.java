@@ -29,24 +29,23 @@ public class ShortestJobFirst implements ProcessAlgorithm {
         while(this.processList.size() != 0 || this.que.size() != 0) {
 
             if (processList.size() != 0) {
-
+                //wanneer geen process meer staat te wachten direct aan volgende beginnen
                 if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
                     elapsedTime = processList.getFirst().getArrivalTime();
                 }
-
+                //alle processen die mogelijks al kunnen starten naar queue verplaatsen
                 while (elapsedTime >= processList.getFirst().getArrivalTime()) {
                     que.add(processList.removeFirst());
                     if(processList.size() == 0) break;
                 }
             }
+            //kortste process uit de priorityqueue halen en laten uitvoeren
             exiting = que.poll();
             elapsedTime += exiting.getServiceTime();
             exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
             exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
             this.result.add(exiting);
         }
-
-        this.result.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return result;
     }
 

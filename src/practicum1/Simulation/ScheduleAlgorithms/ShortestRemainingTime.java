@@ -27,19 +27,22 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
         while(this.processList.size() != 0) {
 
             while (elapsedTime < processList.getFirst().getArrivalTime() && this.que.size() != 0) {
+                //roundrobin manier gebruiken om process 1 jiffy te laten uitvoeren
+                //steeds process met kleinste resterende tijd uit queue nemen
                 elapsedTime += this.que.peek().serve(1);
                 if(this.que.peek().getTimeToServe() <= 0){
+                    //wanneer dit process gedaan is, het process naar de resultlijst verplaatsen
                     exiting = this.que.poll();
                     exiting.setTurnAroundTime(elapsedTime - exiting.getArrivalTime());
                     exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
                     this.result.add(exiting);
                 }
             }
-
+            //wanneer er geen process meer staat te wachten, direct aan volgende beginnen
             if (this.que.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()) {
                 elapsedTime = processList.getFirst().getArrivalTime();
             }
-
+            //alle processen die mogelijks kunnen starten aan queue toevoegen
             while (elapsedTime >= processList.getFirst().getArrivalTime()) {
                 que.add(processList.removeFirst());
                 if(processList.size() == 0){
@@ -47,6 +50,8 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
                 }
             }
         }
+
+        //laatste van de lijst nog aan sneltempo verwerken
         while (this.que.size() != 0){
             exiting = this.que.poll();
             elapsedTime += exiting.getTimeToServe();

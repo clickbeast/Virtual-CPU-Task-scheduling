@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 public class ShortestTATFirst implements Comparator<ProcessInfo> {
 
+    //comparator om op TAT te sorteren in priorityqueue
+
     private TimeInterface timeInterface;
 
     public ShortestTATFirst(TimeInterface timeInterface){

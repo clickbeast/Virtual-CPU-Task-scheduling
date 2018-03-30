@@ -34,12 +34,17 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
 
             if(processList.size() != 0) {
 
+                //wanneer geen processen staan te wachten, direct aan volgende beginnen
                 if(this.que.size() == 0 && que2.size() == 0 && que3.size() == 0 && elapsedTime < processList.getFirst().getArrivalTime()){
                     elapsedTime = processList.getFirst().getArrivalTime();
                 }
 
-                if (elapsedTime >= processList.getFirst().getArrivalTime()) {
+                //alle wachtende processen aan de queue toevoegen
+                while (elapsedTime >= processList.getFirst().getArrivalTime()) {
                     que.addLast(processList.removeFirst());
+                    if(processList.size() == 0){
+                        break;
+                    }
                 }
             }
 
@@ -50,6 +55,7 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
                 elapsedTime+=que2.getFirst().serve(80);
                 pass(que2, que3);
             } else if(que3.size() != 0){
+                //first come first server implementatie
                 exiting = que3.removeFirst();
                 elapsedTime+=exiting.getTimeToServe();
                 exiting.setWaitTime(elapsedTime - exiting.getArrivalTime() - exiting.getServiceTime());
@@ -63,6 +69,7 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
     }
 
     private void pass(LinkedList<ProcessInfo> originalQue, LinkedList<ProcessInfo> nextQue){
+        //process doorgeven tussen 2 queues of proess naar result lijst verplaatsen
         ProcessInfo exiting;
         if(originalQue.getFirst().getTimeToServe() > 0) nextQue.addLast(originalQue.removeFirst());
         else{

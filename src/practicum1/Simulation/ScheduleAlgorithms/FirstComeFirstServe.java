@@ -22,6 +22,7 @@ public class FirstComeFirstServe implements ProcessAlgorithm {
 
         for(ProcessInfo process: processList){
 
+            //elk process sequentieel doorlopen
             if(elapsedTime > process.getArrivalTime()){
                 process.setWaitTime(elapsedTime - process.getArrivalTime());
             } else{
@@ -31,7 +32,6 @@ public class FirstComeFirstServe implements ProcessAlgorithm {
             process.setTurnAroundTime(process.getServiceTime() + process.getWaitTime());
             elapsedTime += process.getServiceTime();
         }
-        this.processList.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return this.processList;
     }
 

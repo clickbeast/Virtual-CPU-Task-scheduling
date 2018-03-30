@@ -12,6 +12,7 @@ import practicum1.DataProcessing.Containers.SimulationResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ResultProcessor {
@@ -22,6 +23,8 @@ public class ResultProcessor {
         //Calculate de gemiddlede tat en turn around time
         System.out.println("Generating simulationresult");
 
+        //processlist sorteren volgens servicetime
+        processList.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
 
         int partition = processList.size()/100;
         int count = 0;
