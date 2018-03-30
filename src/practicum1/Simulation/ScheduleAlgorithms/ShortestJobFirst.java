@@ -6,9 +6,6 @@ import practicum1.DataProcessing.Containers.ProcessList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import practicum1.Simulation.Comparators.ReOrderComparator;
-import practicum1.Simulation.Comparators.ShortestFirst;
-
 
 public class ShortestJobFirst implements ProcessAlgorithm {
 
@@ -49,7 +46,7 @@ public class ShortestJobFirst implements ProcessAlgorithm {
             this.result.add(exiting);
         }
 
-        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
+        this.result.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return result;
     }
 

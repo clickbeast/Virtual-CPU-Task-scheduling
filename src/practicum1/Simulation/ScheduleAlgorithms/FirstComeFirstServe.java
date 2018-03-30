@@ -4,6 +4,7 @@ package practicum1.Simulation.ScheduleAlgorithms;
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
 
+import java.util.Comparator;
 
 
 public class FirstComeFirstServe implements ProcessAlgorithm {
@@ -30,7 +31,7 @@ public class FirstComeFirstServe implements ProcessAlgorithm {
             process.setTurnAroundTime(process.getServiceTime() + process.getWaitTime());
             elapsedTime += process.getServiceTime();
         }
-
+        this.processList.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return this.processList;
     }
 

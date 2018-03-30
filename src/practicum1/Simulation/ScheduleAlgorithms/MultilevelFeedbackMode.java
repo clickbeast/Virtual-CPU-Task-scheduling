@@ -2,7 +2,6 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
-import practicum1.Simulation.Comparators.ReOrderComparator;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -45,10 +44,10 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
             }
 
             if(que.size() != 0){
-                elapsedTime+=que.getFirst().serve(64);
+                elapsedTime+=que.getFirst().serve(40);
                 pass(que, que2);
             } else if(que2.size() != 0){
-                elapsedTime+=que2.getFirst().serve(128);
+                elapsedTime+=que2.getFirst().serve(80);
                 pass(que2, que3);
             } else if(que3.size() != 0){
                 exiting = que3.removeFirst();
@@ -59,8 +58,7 @@ public class MultilevelFeedbackMode implements ProcessAlgorithm {
             }
         }
 
-        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
-        this.result.sort(new ReOrderComparator());
+        this.result.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return this.result;
     }
 

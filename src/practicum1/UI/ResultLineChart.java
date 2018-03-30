@@ -4,10 +4,8 @@ import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import practicum1.DataProcessing.Containers.GraphData;
-import practicum1.DataProcessing.Containers.SimulationResult;
 
 import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -35,8 +33,8 @@ public class ResultLineChart extends LineChart <String, Number> {
 
         int percentileCount  = 0;
         for(Double number: grafiekDataBedieningsTijd) {
-            series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number));
             percentileCount++;
+            series.getData().add(new XYChart.Data(Integer.toString(percentileCount), number));
         }
 
         this.getData().add(series);

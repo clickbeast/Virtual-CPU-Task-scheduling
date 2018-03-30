@@ -1,10 +1,10 @@
 package practicum1.Simulation;
 
-import practicum1.MainWindowViewController;
 import practicum1.DataProcessing.Containers.ProcessList;
+import practicum1.DataProcessing.Containers.SimulationResult;
 import practicum1.DataProcessing.Processing.ResultProcessor;
 import practicum1.DataProcessing.Processing.XMLProcessor;
-import practicum1.DataProcessing.Containers.SimulationResult;
+import practicum1.MainWindowViewController;
 import practicum1.Simulation.ScheduleAlgorithms.*;
 
 import java.util.ArrayList;
@@ -65,21 +65,38 @@ public class SimulationManager {
 
         //define all used algos algirithmn
         ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe(this.processList);
+        viewController.displayInfoMessage("Starting first come first serve");
         results.add(this.runSimulation(firstComeFirstServe));
+        viewController.displayInfoMessage("Done first come first serve");
         ProcessAlgorithm roundRobin2 = new RoundRobin(this.processList, 2);
+
+        viewController.displayInfoMessage("Starting round robin, q = 2");
         results.add(this.runSimulation(roundRobin2));
+        viewController.displayInfoMessage("Done round robin, q = 2");
         ProcessAlgorithm roundRobin8 = new RoundRobin(this.processList, 8);
+        viewController.displayInfoMessage("Starting round robin, q = 8");
         results.add(this.runSimulation(roundRobin8));
-        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio(this.processList);
-        results.add(this.runSimulation(highestResponseRatio));
-        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime(this.processList);
-        results.add(this.runSimulation(shortestRemainingTime));
+        viewController.displayInfoMessage("Done round robin, q = 8");
+
         ProcessAlgorithm shortestJobFirst = new ShortestJobFirst(this.processList);
+        viewController.displayInfoMessage("Starting shortest job first");
         results.add(this.runSimulation(shortestJobFirst));
+        viewController.displayInfoMessage("Done shortest job first");
+
+        ProcessAlgorithm shortestRemainingTime = new ShortestRemainingTime(this.processList);
+        viewController.displayInfoMessage("Starting shortest remaining time first");
+        results.add(this.runSimulation(shortestRemainingTime));
+        viewController.displayInfoMessage("Done shortest remaining time first");
+
+        ProcessAlgorithm highestResponseRatio = new HighestResponseRatio(this.processList);
+        viewController.displayInfoMessage("Starting highest response ratio");
+        results.add(this.runSimulation(highestResponseRatio));
+        viewController.displayInfoMessage("Done highest response ratio");
+
         ProcessAlgorithm multilevelFeedbackMode = new MultilevelFeedbackMode(this.processList);
+        viewController.displayInfoMessage("Starting multilevel feedback");
         results.add(this.runSimulation(multilevelFeedbackMode));
-
-
+        viewController.displayInfoMessage("Done multilevel feedback");
 
         viewController.displayInfoMessage("Done Running Algorithms");
 

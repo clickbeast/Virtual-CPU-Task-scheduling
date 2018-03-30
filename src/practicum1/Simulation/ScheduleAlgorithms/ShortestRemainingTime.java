@@ -2,7 +2,6 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
-import practicum1.Simulation.Comparators.ShortestRemaining;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -56,7 +55,7 @@ public class ShortestRemainingTime implements ProcessAlgorithm {
             this.result.add(exiting);
         }
 
-        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
+        this.result.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return result;
     }
 

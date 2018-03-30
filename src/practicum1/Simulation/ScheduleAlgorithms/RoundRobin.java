@@ -2,7 +2,6 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
-import practicum1.Simulation.Comparators.ReOrderComparator;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -36,8 +35,9 @@ public class RoundRobin implements  ProcessAlgorithm{
                     elapsedTime = processList.getFirst().getArrivalTime();
                 }
 
-                if (elapsedTime >= processList.getFirst().getArrivalTime()) {
+                while (elapsedTime >= processList.getFirst().getArrivalTime()) {
                     que.addLast(processList.removeFirst());
+                    if(processList.size() == 0) break;
                 }
             }
 
@@ -51,7 +51,7 @@ public class RoundRobin implements  ProcessAlgorithm{
             }
         }
 
-        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
+        this.result.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return result;
     }
 

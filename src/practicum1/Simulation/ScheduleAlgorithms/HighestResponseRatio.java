@@ -2,7 +2,6 @@ package practicum1.Simulation.ScheduleAlgorithms;
 
 import practicum1.DataProcessing.Containers.ProcessInfo;
 import practicum1.DataProcessing.Containers.ProcessList;
-import practicum1.Simulation.Comparators.ReOrderComparator;
 import practicum1.Simulation.Comparators.ShortestTATFirst;
 import practicum1.Simulation.Comparators.TimeInterface;
 
@@ -50,7 +49,7 @@ public class HighestResponseRatio implements ProcessAlgorithm, TimeInterface {
             this.result.add(exiting);
         }
 
-        result.sort(Comparator.comparingInt(ProcessInfo::getArrivalTime));
+        this.result.sort(Comparator.comparingInt(ProcessInfo::getServiceTime));
         return result;
     }
 
