@@ -54,11 +54,12 @@ public class ResultProcessor {
                 count = 0;
             }
         }
-
+/*
+for testing purposes
         System.out.println("SOLUTOION");
         System.out.println(Arrays.toString(tempTurnAroundValues.toArray()));
         System.out.println(Arrays.toString(tempWaitTimeValues.toArray()));
-
+*/
 
         return new SimulationResult(algorithmName,waitTimeGraph,turnAroundTimeGraph, null,null);
 

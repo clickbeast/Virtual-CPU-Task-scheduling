@@ -32,14 +32,6 @@ public class SimulationManager {
     }
 
 
-    public void resetSimulationManager() {
-        if(processList != null) {
-            processList.clear();
-        }
-    }
-
-
-
     public void prepareToSchedule10000() {
         processList = new XMLProcessor().generateProcessListBasedOnXML("processen10000.xml");
     }
@@ -60,8 +52,6 @@ public class SimulationManager {
         viewController.displayInfoMessage("Beginning to run Algorithms.");
 
         List<SimulationResult> results = new ArrayList<>();
-
-        //VANAF 3de gaan er duidemlijk nog zaken mis
 
         //define all used algos algirithmn
         ProcessAlgorithm firstComeFirstServe = new FirstComeFirstServe(this.processList);
